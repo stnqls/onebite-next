@@ -34,7 +34,22 @@ export default function Page({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
 
-  if (router.isFallback) return "로딩중입니다.";
+  if (router.isFallback) {
+    return (
+      <>
+        <Head>
+          <title>한입 북스</title>
+          <meta property="og:image" content={"/thumbnail.png"} />
+          <meta property="og:title" content={"한입북스"} />
+          <meta
+            property="og:description"
+            content={"한입 북스에 등록된 도서를 만나보세요"}
+          />
+        </Head>
+        <div>로딩중입니다.</div>
+      </>
+    );
+  }
   if (!book) return "문제가 발생했습니다 다시 시도하세요";
   const { title, subTitle, description, author, publisher, coverImgUrl } = book;
 
