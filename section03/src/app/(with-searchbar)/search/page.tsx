@@ -1,14 +1,9 @@
 import { BookData } from "@/types";
 import BookItem from "@/components/book-item";
 import { delay } from "@/util/delay";
+import { Suspense } from "react";
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Promise<{ q?: string }>;
-}) {
-  const { q } = await searchParams;
-
+async function SearchResult({ q }: { q?: string }) {
   await delay(1500);
 
   const response = await fetch(
@@ -29,5 +24,17 @@ export default async function Page({
         <BookItem key={book.id} {...book} />
       ))}
     </div>
+  );
+}
+
+export default function Page({
+  searchParams,
+}: {
+  searchParams: { q?: string };
+}) {
+  return (
+    <Suspense key={searchParams.q || ""} fallback={<div>Loading ...</div>}>
+      <SearchResult q={searchParams.q || ""} />
+    </Suspense>
   );
 }
