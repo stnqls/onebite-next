@@ -29,8 +29,7 @@ async function AllBooks() {
 async function RecoBooks() {
   await delay(3000);
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`,
-    { next: { revalidate: 3 } }
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`
   );
   if (!response.ok) {
     return <div>오류가 발생했습니다...</div>;

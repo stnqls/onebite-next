@@ -38,7 +38,7 @@ export default function Page({
       key={searchParams.q || ""}
       fallback={<BookListSkeleton count={3} />}
     >
-      <SearchResult q={searchParams.q || ""} />
+      <SearchResult q={searchParams?.q || ""} />
     </Suspense>
   );
 }
