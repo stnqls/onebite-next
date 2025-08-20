@@ -9,7 +9,9 @@ export default async function Page({
   const { q } = await searchParams;
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/search?q=${q}`
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/search?q=${q}`,
+    { cache: "force-cache" }
+    // 한번이라도 검색이 된 결과는 캐싱된다.
   );
 
   if (!response.ok) {
