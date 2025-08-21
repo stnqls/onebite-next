@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 export async function createReviewAction(formData: FormData) {
   const content = formData.get("content")?.toString();
   const author = formData.get("author")?.toString();
@@ -16,6 +18,10 @@ export async function createReviewAction(formData: FormData) {
       }
     );
     console.log(response.status);
+    // 해당 경로의 페이지를 재검증한다.(재생성)
+    // 서버에서 book/{booId} 페이지를 다시 생성한다.
+    // 데이터가 cache되어있어도 무시하고 재생성한다.
+    revalidatePath(`/book/${bookId}`);
   } catch (err) {
     console.error(err);
     return;
